@@ -95,7 +95,7 @@ export function AppSidebar() {
           <AutoAwesomeIcon sx={{ color: '#fff', fontSize: 20 }} />
         </Box>
         <Typography sx={{ fontWeight: 600, color: '#F2F2F2', fontSize: '1rem' }}>
-          ResearchAI
+          RAR
         </Typography>
       </Box>
 
@@ -290,7 +290,7 @@ export function TopBar() {
       time: '1 day ago',
     },
     {
-      title: 'Welcome to ResearchAI',
+      title: 'Welcome to RAR',
       body: 'Complete your profile to get started',
       time: '3 days ago',
     },

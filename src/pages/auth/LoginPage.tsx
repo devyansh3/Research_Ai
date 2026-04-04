@@ -35,29 +35,36 @@ function GitHubIcon() {
   )
 }
 
+const BLUE = '#1A56DB'
+const BLUE_LIGHT = '#2563EB'
+
 const inputSx = {
   width: '100%',
   bgcolor: '#ffffff',
   borderRadius: '12px',
   fontSize: '0.95rem',
-  '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(199,196,215,0.3)' },
-  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(199,196,215,0.6)' },
-  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: '#4343d5', borderWidth: '2px' },
+  '& .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(180,205,235,0.5)' },
+  '&:hover .MuiOutlinedInput-notchedOutline': { borderColor: 'rgba(180,205,235,0.9)' },
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': { borderColor: BLUE, borderWidth: '2px' },
   '& input': { py: 1.5, px: 2 },
-  '& input::placeholder': { color: 'rgba(22,20,35,0.3)', opacity: 1 },
+  '& input::placeholder': { color: 'rgba(30,30,50,0.3)', opacity: 1 },
 }
 
 const gradientBtnSx = {
-  background: 'linear-gradient(135deg, #4343d5 0%, #5d5fef 100%)',
+  background: `linear-gradient(135deg, ${BLUE} 0%, ${BLUE_LIGHT} 100%)`,
   color: '#fff',
   py: 1.75,
   borderRadius: '12px',
   fontWeight: 700,
   fontSize: '1rem',
   letterSpacing: '0.01em',
-  boxShadow: '0 8px 24px -6px rgba(67,67,213,0.3)',
-  '&:hover': { opacity: 0.9, boxShadow: '0 12px 28px -6px rgba(67,67,213,0.4)', background: 'linear-gradient(135deg, #4343d5 0%, #5d5fef 100%)' },
-  '&.Mui-disabled': { background: 'rgba(67,67,213,0.25)', color: 'rgba(255,255,255,0.6)' },
+  boxShadow: '0 8px 24px -6px rgba(26,86,219,0.3)',
+  '&:hover': {
+    opacity: 0.9,
+    boxShadow: '0 12px 28px -6px rgba(26,86,219,0.4)',
+    background: `linear-gradient(135deg, ${BLUE} 0%, ${BLUE_LIGHT} 100%)`,
+  },
+  '&.Mui-disabled': { background: 'rgba(26,86,219,0.2)', color: 'rgba(255,255,255,0.6)' },
 }
 
 export default function LoginPage() {
@@ -82,7 +89,7 @@ export default function LoginPage() {
   }
 
   return (
-    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', bgcolor: '#fcf8ff' }}>
+    <Box sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', bgcolor: '#f5f8ff' }}>
       {/* Navbar */}
       <Box
         component="nav"
@@ -92,23 +99,17 @@ export default function LoginPage() {
           alignItems: 'center',
           px: { xs: 3, md: 5 },
           height: 72,
-          bgcolor: '#fcf8ff',
+          bgcolor: '#f5f8ff',
         }}
       >
-        <Typography
-          sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: '1.375rem', color: '#1b1b23' }}
-        >
-          ResearchAI
+        <Typography sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: '1.375rem', color: '#111111' }}>
+          RAR
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
-          <Button
-            component={Link}
-            to="/login"
-            sx={{ ...gradientBtnSx, py: 1, px: 3, fontSize: '0.875rem' }}
-          >
+          <Button component={Link} to="/login" sx={{ ...gradientBtnSx, py: 1, px: 3, fontSize: '0.875rem' }}>
             Sign In
           </Button>
-          <Link to="/signup" style={{ color: 'rgba(27,27,35,0.7)', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500 }}>
+          <Link to="/signup" style={{ color: 'rgba(20,20,40,0.6)', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500 }}>
             Sign Up
           </Link>
         </Box>
@@ -129,19 +130,19 @@ export default function LoginPage() {
         }}
       >
         {/* Decorative blobs */}
-        <Box sx={{ position: 'absolute', top: '-10%', right: '-5%', width: 384, height: 384, bgcolor: 'rgba(67,67,213,0.05)', borderRadius: '50%', filter: 'blur(64px)', pointerEvents: 'none' }} />
-        <Box sx={{ position: 'absolute', bottom: '-10%', left: '-5%', width: 320, height: 320, bgcolor: 'rgba(144,68,0,0.04)', borderRadius: '50%', filter: 'blur(64px)', pointerEvents: 'none' }} />
+        <Box sx={{ position: 'absolute', top: '-10%', right: '-5%', width: 384, height: 384, bgcolor: 'rgba(26,86,219,0.06)', borderRadius: '50%', filter: 'blur(64px)', pointerEvents: 'none' }} />
+        <Box sx={{ position: 'absolute', bottom: '-10%', left: '-5%', width: 320, height: 320, bgcolor: 'rgba(26,86,219,0.03)', borderRadius: '50%', filter: 'blur(64px)', pointerEvents: 'none' }} />
 
         <Box sx={{ width: '100%', maxWidth: 520, position: 'relative', zIndex: 1 }}>
           {/* Glass card */}
           <Box
             sx={{
-              background: 'rgba(245, 242, 254, 0.85)',
+              background: 'rgba(240,247,255,0.9)',
               backdropFilter: 'blur(20px)',
               WebkitBackdropFilter: 'blur(20px)',
-              border: '1px solid rgba(199,196,215,0.2)',
+              border: '1px solid rgba(180,210,240,0.3)',
               borderRadius: '16px',
-              boxShadow: '0 12px 32px -8px rgba(67,67,213,0.08)',
+              boxShadow: '0 12px 32px -8px rgba(26,86,219,0.08)',
               p: { xs: 4, md: 6 },
             }}
           >
@@ -152,7 +153,7 @@ export default function LoginPage() {
                   fontFamily: 'Manrope, sans-serif',
                   fontWeight: 700,
                   fontSize: { xs: '1.75rem', md: '2.25rem' },
-                  color: '#1b1b23',
+                  color: '#111111',
                   lineHeight: 1.2,
                   letterSpacing: '-0.02em',
                   mb: 1.5,
@@ -160,8 +161,8 @@ export default function LoginPage() {
               >
                 Welcome back.
               </Typography>
-              <Typography sx={{ color: 'rgba(70,69,85,0.85)', fontSize: '0.95rem', lineHeight: 1.6 }}>
-                Sign in to your ResearchAI account to continue your research.
+              <Typography sx={{ color: 'rgba(30,30,60,0.65)', fontSize: '0.95rem', lineHeight: 1.6 }}>
+                Sign in to your RAR account to continue your research.
               </Typography>
             </Box>
 
@@ -174,7 +175,7 @@ export default function LoginPage() {
             <Box component="form" onSubmit={handleSubmit} sx={{ display: 'flex', flexDirection: 'column', gap: 2.5 }}>
               {/* Email */}
               <Box>
-                <Typography variant="body2" fontWeight={600} sx={{ mb: 0.75, ml: 0.5, color: '#1b1b23', fontSize: '0.875rem' }}>
+                <Typography variant="body2" fontWeight={600} sx={{ mb: 0.75, ml: 0.5, color: '#111111', fontSize: '0.875rem' }}>
                   Email Address
                 </Typography>
                 <OutlinedInput
@@ -192,12 +193,12 @@ export default function LoginPage() {
               {/* Password */}
               <Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 0.75, ml: 0.5 }}>
-                  <Typography variant="body2" fontWeight={600} sx={{ color: '#1b1b23', fontSize: '0.875rem' }}>
+                  <Typography variant="body2" fontWeight={600} sx={{ color: '#111111', fontSize: '0.875rem' }}>
                     Password
                   </Typography>
                   <Typography
                     component="span"
-                    sx={{ fontSize: '0.8rem', color: '#4343d5', fontWeight: 600, cursor: 'pointer', '&:hover': { opacity: 0.8 } }}
+                    sx={{ fontSize: '0.8rem', color: BLUE, fontWeight: 600, cursor: 'pointer', '&:hover': { opacity: 0.8 } }}
                   >
                     Forgot password?
                   </Typography>
@@ -213,7 +214,7 @@ export default function LoginPage() {
                   sx={inputSx}
                   endAdornment={
                     <InputAdornment position="end">
-                      <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" size="small" sx={{ mr: 0.5, color: 'rgba(114,113,134,0.7)' }}>
+                      <IconButton onClick={() => setShowPassword(!showPassword)} edge="end" size="small" sx={{ mr: 0.5, color: 'rgba(30,30,80,0.5)' }}>
                         {showPassword ? <VisibilityOffIcon sx={{ fontSize: 18 }} /> : <VisibilityIcon sx={{ fontSize: 18 }} />}
                       </IconButton>
                     </InputAdornment>
@@ -234,9 +235,9 @@ export default function LoginPage() {
 
             {/* Divider */}
             <Box sx={{ position: 'relative', my: 4 }}>
-              <Divider sx={{ borderColor: 'rgba(199,196,215,0.2)' }} />
-              <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', bgcolor: 'rgba(245,242,254,0.9)', px: 2 }}>
-                <Typography sx={{ fontSize: '0.7rem', color: 'rgba(70,69,85,0.6)', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+              <Divider sx={{ borderColor: 'rgba(180,210,240,0.3)' }} />
+              <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', bgcolor: 'rgba(240,247,255,0.95)', px: 2 }}>
+                <Typography sx={{ fontSize: '0.7rem', color: 'rgba(30,30,60,0.5)', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                   Or sign in with
                 </Typography>
               </Box>
@@ -253,15 +254,15 @@ export default function LoginPage() {
                   variant="outlined"
                   fullWidth
                   sx={{
-                    borderColor: 'rgba(199,196,215,0.3)',
+                    borderColor: 'rgba(180,205,235,0.5)',
                     bgcolor: '#ffffff',
-                    color: '#1b1b23',
+                    color: '#111111',
                     borderRadius: '12px',
                     py: 1.25,
                     fontWeight: 600,
                     fontSize: '0.875rem',
                     gap: 1.5,
-                    '&:hover': { bgcolor: '#fcf8ff', borderColor: 'rgba(67,67,213,0.3)', boxShadow: 'none' },
+                    '&:hover': { bgcolor: '#f0f7ff', borderColor: 'rgba(26,86,219,0.3)', boxShadow: 'none' },
                     boxShadow: 'none',
                   }}
                   startIcon={<Icon />}
@@ -272,9 +273,9 @@ export default function LoginPage() {
             </Box>
 
             {/* Sign up link */}
-            <Typography sx={{ mt: 4, textAlign: 'center', color: 'rgba(70,69,85,0.8)', fontSize: '0.9rem' }}>
+            <Typography sx={{ mt: 4, textAlign: 'center', color: 'rgba(30,30,60,0.7)', fontSize: '0.9rem' }}>
               Don't have an account?{' '}
-              <Link to="/signup" style={{ color: '#4343d5', fontWeight: 700, textDecoration: 'none' }}>
+              <Link to="/signup" style={{ color: BLUE, fontWeight: 700, textDecoration: 'none' }}>
                 Sign Up
               </Link>
             </Typography>
@@ -283,14 +284,14 @@ export default function LoginPage() {
           {/* Badge */}
           <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
             <Chip
-              icon={<AutoAwesomeIcon sx={{ fontSize: '14px !important', color: '#3f465f !important' }} />}
+              icon={<AutoAwesomeIcon sx={{ fontSize: '14px !important', color: '#1444B0 !important' }} />}
               label="Join 15,000+ researchers globally"
               sx={{
-                bgcolor: '#dbe1ff',
-                color: '#131a32',
+                bgcolor: '#dbeafe',
+                color: '#1e3a8a',
                 fontWeight: 600,
                 fontSize: '0.75rem',
-                border: '1px solid rgba(255,255,255,0.5)',
+                border: '1px solid rgba(255,255,255,0.6)',
                 boxShadow: '0 2px 8px rgba(0,0,0,0.06)',
                 '& .MuiChip-label': { px: 1.5 },
               }}
@@ -305,8 +306,8 @@ export default function LoginPage() {
         sx={{
           py: { xs: 4, md: 5 },
           px: { xs: 3, md: 5 },
-          bgcolor: '#fcf8ff',
-          borderTop: '1px solid rgba(199,196,215,0.15)',
+          bgcolor: '#f5f8ff',
+          borderTop: '1px solid rgba(180,210,240,0.2)',
           display: 'flex',
           flexDirection: { xs: 'column', md: 'row' },
           justifyContent: 'space-between',
@@ -315,11 +316,11 @@ export default function LoginPage() {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-          <Typography sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, color: '#1b1b23', fontSize: '1rem' }}>
-            ResearchAI
+          <Typography sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, color: '#111111', fontSize: '1rem' }}>
+            RAR
           </Typography>
-          <Typography sx={{ color: 'rgba(27,27,35,0.45)', fontSize: '0.875rem' }}>
-            © 2024 ResearchAI. Built for curators.
+          <Typography sx={{ color: 'rgba(20,20,40,0.45)', fontSize: '0.875rem' }}>
+            © 2024 Research & Analysis Report Generator.
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: 4 }}>
@@ -328,7 +329,7 @@ export default function LoginPage() {
               key={link}
               component="a"
               href="#"
-              sx={{ color: 'rgba(27,27,35,0.45)', fontSize: '0.875rem', textDecoration: 'none', '&:hover': { color: '#4343d5' }, transition: 'color 0.15s' }}
+              sx={{ color: 'rgba(20,20,40,0.45)', fontSize: '0.875rem', textDecoration: 'none', '&:hover': { color: BLUE }, transition: 'color 0.15s' }}
             >
               {link}
             </Typography>

@@ -91,7 +91,7 @@ export default function OnboardingPage() {
           <Box sx={{ bgcolor: '#5B5BD6', borderRadius: 2, p: 0.75, display: 'flex' }}>
             <AutoAwesomeIcon sx={{ color: '#fff', fontSize: 20 }} />
           </Box>
-          <Typography sx={{ fontWeight: 700, color: '#F2F2F2', fontSize: '1.1rem' }}>ResearchAI</Typography>
+          <Typography sx={{ fontWeight: 700, color: '#F2F2F2', fontSize: '1.1rem' }}>RAR</Typography>
         </Box>
 
         {/* Step list */}

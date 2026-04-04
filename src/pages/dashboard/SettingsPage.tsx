@@ -75,7 +75,7 @@ export default function SettingsPage() {
                 { key: 'emailNotifications', label: 'Email Notifications', desc: 'Receive notifications via email' },
                 { key: 'reportReadyAlerts', label: 'Report Ready Alerts', desc: 'Get notified when reports are generated' },
                 { key: 'weeklyDigest', label: 'Weekly Digest', desc: 'Weekly summary of your activity' },
-                { key: 'newFeatureUpdates', label: 'New Feature Updates', desc: 'Learn about new ResearchAI features' },
+                { key: 'newFeatureUpdates', label: 'New Feature Updates', desc: 'Learn about new RAR features' },
               ].map(({ key, label, desc }) => (
                 <Box key={key} sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', py: 1.5, borderBottom: '1px solid', borderColor: 'divider', '&:last-child': { borderBottom: 'none' } }}>
                   <Box>

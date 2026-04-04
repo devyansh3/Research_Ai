@@ -3,8 +3,8 @@ import { createTheme } from '@mui/material/styles'
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#5B5BD6',
-      dark: '#4a4ab8',
+      main: '#1A56DB',
+      dark: '#1444B0',
       contrastText: '#ffffff',
     },
     background: {
@@ -80,8 +80,8 @@ const theme = createTheme({
           borderRadius: 4,
           margin: '0 4px',
           '&.Mui-selected': {
-            backgroundColor: 'rgba(91,91,214,0.08)',
-            '&:hover': { backgroundColor: 'rgba(91,91,214,0.12)' },
+            backgroundColor: 'rgba(26,86,219,0.08)',
+            '&:hover': { backgroundColor: 'rgba(26,86,219,0.12)' },
           },
         },
       },
@@ -98,8 +98,8 @@ const theme = createTheme({
           marginBottom: 2,
           '&.Mui-selected': {
             backgroundColor: '#2e2e2e',
-            color: '#5B5BD6',
-            '& .MuiListItemIcon-root': { color: '#5B5BD6' },
+            color: '#ffffff',
+            '& .MuiListItemIcon-root': { color: '#ffffff' },
             '&:hover': { backgroundColor: '#333333' },
           },
           '&:hover': {
