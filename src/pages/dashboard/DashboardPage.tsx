@@ -105,7 +105,7 @@ export default function DashboardPage() {
     <Box sx={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
 
       {/* ── Main content ── */}
-      <Box sx={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', p: { xs: 3, md: 5 } }}>
+      <Box sx={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', p: { xs: 3, md: 5 }, background: 'radial-gradient(ellipse 90% 65% at 50% 38%, rgba(26, 87, 219, 0.15) 0%, rgba(26, 87, 219, 0.19) 55%, #FAFAFA 100%)' }}>
         <Box sx={{ width: '100%', maxWidth: 680 }}>
 
           {/* Hero */}
