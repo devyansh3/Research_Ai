@@ -9,6 +9,8 @@ import {
   Typography,
   InputAdornment,
   IconButton,
+  Chip,
+  Divider,
 } from '@mui/material'
 import SmartToyIcon from '@mui/icons-material/SmartToy'
 import SendIcon from '@mui/icons-material/Send'
@@ -18,7 +20,8 @@ import BarChartIcon from '@mui/icons-material/BarChart'
 import PieChartIcon from '@mui/icons-material/PieChart'
 import TrendingUpIcon from '@mui/icons-material/TrendingUp'
 import DescriptionIcon from '@mui/icons-material/Description'
-import FileOpenIcon from '@mui/icons-material/FileOpen'
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined'
+import AccessTimeIcon from '@mui/icons-material/AccessTime'
 
 const examplePrompts = [
   {
@@ -48,10 +51,44 @@ const examplePrompts = [
 ]
 
 const recentReports = [
-  { id: '1', title: 'Manufacturing R&D Analysis - Siemens NX', date: '2 hours ago' },
-  { id: '2', title: 'Tool Comparison - CAD Software', date: '1 day ago' },
-  { id: '3', title: 'Strategic Assessment - Q1 2024', date: '3 days ago' },
+  {
+    id: '1',
+    title: 'Manufacturing R&D Analysis — Siemens NX',
+    excerpt: 'Comprehensive evaluation of Siemens NX capabilities across design, simulation, and manufacturing workflows.',
+    sector: 'Manufacturing',
+    date: '2 hours ago',
+  },
+  {
+    id: '2',
+    title: 'CAD Software Tool Comparison',
+    excerpt: 'Side-by-side analysis of leading CAD platforms for enterprise adoption and total cost of ownership.',
+    sector: 'Technology',
+    date: '1 day ago',
+  },
+  {
+    id: '3',
+    title: 'Strategic Assessment — Q1 2024',
+    excerpt: 'Executive-level strategic overview of R&D investments and technology portfolio alignment.',
+    sector: 'Strategy',
+    date: '3 days ago',
+  },
+  {
+    id: '4',
+    title: 'Aerospace Component Design Tools',
+    excerpt: 'Benchmarking advanced design tools for aerospace-grade precision and regulatory compliance.',
+    sector: 'Aerospace',
+    date: '5 days ago',
+  },
+  {
+    id: '5',
+    title: 'Digital Twin Platform Evaluation',
+    excerpt: 'Analysis of digital twin platforms for predictive maintenance and real-time monitoring.',
+    sector: 'Industrial IoT',
+    date: '1 week ago',
+  },
 ]
+
+const SIDEBAR_WIDTH = 300
 
 export default function DashboardPage() {
   const [message, setMessage] = useState('')
@@ -65,32 +102,34 @@ export default function DashboardPage() {
   }
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-      {/* Main content */}
-      <Box sx={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', p: 4 }}>
-        <Box sx={{ width: '100%', maxWidth: 720 }}>
+    <Box sx={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
+
+      {/* ── Main content ── */}
+      <Box sx={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', p: { xs: 3, md: 5 } }}>
+        <Box sx={{ width: '100%', maxWidth: 680 }}>
+
           {/* Hero */}
           <Box sx={{ textAlign: 'center', mb: 5 }}>
             <Box
               sx={{
                 mx: 'auto',
                 mb: 3,
-                width: 68,
-                height: 68,
+                width: 64,
+                height: 64,
                 borderRadius: 3,
-                bgcolor: 'rgba(91,91,214,0.1)',
+                bgcolor: 'rgba(26,86,219,0.08)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
               }}
             >
-              <SmartToyIcon sx={{ fontSize: 34, color: 'primary.main' }} />
+              <SmartToyIcon sx={{ fontSize: 32, color: 'primary.main' }} />
             </Box>
-            <Typography variant="h4" fontWeight={700} gutterBottom>
+            <Typography variant="h4" fontWeight={700} gutterBottom sx={{ letterSpacing: '-0.02em' }}>
               What would you like to research?
             </Typography>
-            <Typography variant="body1" color="text.secondary" sx={{ fontSize: '1rem' }}>
-              Ask me anything or choose from the examples below to get started
+            <Typography variant="body1" color="text.secondary">
+              Ask anything or choose from the examples below to get started
             </Typography>
           </Box>
 
@@ -105,7 +144,7 @@ export default function DashboardPage() {
                 '& .MuiOutlinedInput-root': {
                   borderRadius: 3,
                   fontSize: '1rem',
-                  boxShadow: '0 2px 12px rgba(0,0,0,0.08)',
+                  boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
                   bgcolor: 'background.paper',
                   pr: 0.75,
                   py: 0.5,
@@ -148,14 +187,14 @@ export default function DashboardPage() {
                 py: 1.5,
                 fontSize: '0.95rem',
                 fontWeight: 600,
-                boxShadow: '0 4px 14px rgba(91,91,214,0.35)',
+                boxShadow: '0 4px 14px rgba(26,86,219,0.3)',
               }}
             >
               Generate Custom Report
             </Button>
           </Box>
 
-          {/* Examples */}
+          {/* Example prompts */}
           <Box>
             <Typography
               variant="caption"
@@ -181,7 +220,7 @@ export default function DashboardPage() {
                     transition: 'all 0.15s',
                     '&:hover': {
                       borderColor: 'primary.main',
-                      boxShadow: '0 4px 16px rgba(91,91,214,0.12)',
+                      boxShadow: '0 4px 16px rgba(26,86,219,0.1)',
                       transform: 'translateY(-1px)',
                     },
                   }}
@@ -189,17 +228,17 @@ export default function DashboardPage() {
                   <CardContent sx={{ display: 'flex', alignItems: 'flex-start', gap: 2, p: '16px !important' }}>
                     <Box
                       sx={{
-                        width: 40,
-                        height: 40,
+                        width: 38,
+                        height: 38,
                         borderRadius: 2,
-                        bgcolor: 'rgba(91,91,214,0.1)',
+                        bgcolor: 'rgba(26,86,219,0.08)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexShrink: 0,
                       }}
                     >
-                      <example.Icon sx={{ fontSize: 20, color: 'primary.main' }} />
+                      <example.Icon sx={{ fontSize: 19, color: 'primary.main' }} />
                     </Box>
                     <Box>
                       <Typography variant="body2" fontWeight={600} gutterBottom sx={{ lineHeight: 1.3 }}>
@@ -214,56 +253,117 @@ export default function DashboardPage() {
               ))}
             </Box>
           </Box>
+
         </Box>
       </Box>
 
-      {/* Recent Reports */}
-      <Box sx={{ borderTop: '1px solid', borderColor: 'divider', bgcolor: 'rgba(0,0,0,0.02)', p: 3 }}>
-        <Box sx={{ mx: 'auto', maxWidth: 720 }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-            <Typography variant="body1" fontWeight={600}>Recent Reports</Typography>
-            <Button
-              variant="text"
-              size="small"
-              onClick={() => navigate('/reports')}
-              sx={{ color: 'primary.main', fontWeight: 600 }}
-            >
-              View all
-            </Button>
+      {/* ── Recent Reports sidebar ── */}
+      <Box
+        sx={{
+          width: SIDEBAR_WIDTH,
+          flexShrink: 0,
+          borderLeft: '1px solid',
+          borderColor: 'divider',
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden',
+          bgcolor: '#ffffff',
+        }}
+      >
+        {/* Header */}
+        <Box sx={{ px: 2.5, pt: 3, pb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+            <ArticleOutlinedIcon sx={{ fontSize: 17, color: 'text.secondary' }} />
+            <Typography variant="body2" fontWeight={700} sx={{ color: 'text.primary', letterSpacing: '-0.01em' }}>
+              Recent Reports
+            </Typography>
           </Box>
-          <Box sx={{ display: 'flex', gap: 2, overflowX: 'auto', pb: 1 }}>
-            {recentReports.map((report) => (
-              <Card
-                key={report.id}
+          <Button
+            variant="text"
+            size="small"
+            onClick={() => navigate('/reports')}
+            sx={{ color: 'primary.main', fontWeight: 600, fontSize: '0.75rem', minWidth: 0, p: 0.5 }}
+          >
+            View all
+          </Button>
+        </Box>
+
+        <Divider />
+
+        {/* Scrollable list */}
+        <Box sx={{ flex: 1, overflowY: 'auto', px: 2, py: 1.5, display: 'flex', flexDirection: 'column', gap: 0.5 }}>
+          {recentReports.map((report, index) => (
+            <Box key={report.id}>
+              <Box
                 onClick={() => navigate(`/reports/${report.id}`)}
                 sx={{
-                  minWidth: 280,
+                  py: 2,
+                  px: 1.5,
+                  borderRadius: 2,
                   cursor: 'pointer',
-                  transition: 'all 0.15s',
-                  '&:hover': {
-                    borderColor: 'primary.main',
-                    boxShadow: '0 4px 16px rgba(91,91,214,0.12)',
-                  },
+                  transition: 'background 0.12s',
+                  '&:hover': { bgcolor: 'rgba(26,86,219,0.04)' },
                 }}
               >
-                <CardContent sx={{ p: '16px !important' }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                    <FileOpenIcon sx={{ fontSize: 16, color: 'primary.main' }} />
-                    <Typography variant="caption" color="text.secondary">{report.date}</Typography>
+                {/* Sector chip + date */}
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: 1 }}>
+                  <Chip
+                    label={report.sector}
+                    size="small"
+                    sx={{
+                      height: 20,
+                      fontSize: '0.65rem',
+                      fontWeight: 600,
+                      bgcolor: 'rgba(26,86,219,0.08)',
+                      color: 'primary.main',
+                      '& .MuiChip-label': { px: 1 },
+                    }}
+                  />
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.4 }}>
+                    <AccessTimeIcon sx={{ fontSize: 11, color: 'text.disabled' }} />
+                    <Typography sx={{ fontSize: '0.68rem', color: 'text.disabled', fontWeight: 500 }}>
+                      {report.date}
+                    </Typography>
                   </Box>
-                  <Typography
-                    variant="body2"
-                    fontWeight={500}
-                    sx={{ display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}
-                  >
-                    {report.title}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
-          </Box>
+                </Box>
+
+                {/* Title */}
+                <Typography
+                  variant="body2"
+                  fontWeight={600}
+                  sx={{
+                    lineHeight: 1.4,
+                    color: 'text.primary',
+                    mb: 0.75,
+                    fontSize: '0.825rem',
+                  }}
+                >
+                  {report.title}
+                </Typography>
+
+                {/* Excerpt */}
+                <Typography
+                  sx={{
+                    fontSize: '0.75rem',
+                    color: 'text.secondary',
+                    lineHeight: 1.5,
+                    display: '-webkit-box',
+                    WebkitLineClamp: 2,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {report.excerpt}
+                </Typography>
+              </Box>
+              {index < recentReports.length - 1 && (
+                <Divider sx={{ mx: 1.5 }} />
+              )}
+            </Box>
+          ))}
         </Box>
       </Box>
+
     </Box>
   )
 }

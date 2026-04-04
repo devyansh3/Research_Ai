@@ -232,7 +232,6 @@ export default function ReportDetailPage() {
                     fullWidth
                     disabled={!comparisonTool}
                     onClick={handleCompare}
-                    startIcon={<CompareArrowsIcon />}
                     size="small"
                   >
                     Compare {selectedTool?.label} vs {tools.find((t) => t.value === comparisonTool)?.label || 'Tool'}

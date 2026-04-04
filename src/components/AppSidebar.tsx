@@ -14,9 +14,6 @@ import {
   Menu,
   MenuItem,
   Divider,
-  AppBar,
-  Toolbar,
-  IconButton,
   Badge,
 } from '@mui/material'
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome'
@@ -43,10 +40,28 @@ const accountNav = [
   { name: 'Settings', href: '/settings', Icon: SettingsIcon },
 ]
 
+const notifications = [
+  {
+    title: 'Report Generated',
+    body: 'Your Manufacturing Analysis report is ready',
+    time: '2 hours ago',
+  },
+  {
+    title: 'New Feature Available',
+    body: 'Try our new comparison tools',
+    time: '1 day ago',
+  },
+  {
+    title: 'Welcome to RAR',
+    body: 'Complete your profile to get started',
+    time: '3 days ago',
+  },
+]
+
 export function AppSidebar() {
   const location = useLocation()
   const { user, logout } = useAuth()
-  const [userMenuAnchor, setUserMenuAnchor] = useState<null | HTMLElement>(null)
+  const [notifAnchor, setNotifAnchor] = useState<null | HTMLElement>(null)
 
   const initials = user?.name
     ? user.name.split(' ').map((n) => n[0]).join('').toUpperCase()
@@ -84,7 +99,7 @@ export function AppSidebar() {
       >
         <Box
           sx={{
-            bgcolor: '#5B5BD6',
+            bgcolor: '#1A56DB',
             borderRadius: 2,
             p: 0.75,
             display: 'flex',
@@ -101,23 +116,7 @@ export function AppSidebar() {
 
       {/* Navigation */}
       <Box sx={{ flex: 1, overflowY: 'auto', px: 1.5, py: 2 }}>
-        {/* Main section */}
-        <Typography
-          variant="caption"
-          sx={{
-            px: 1.5,
-            mb: 1,
-            display: 'block',
-            color: 'rgba(242,242,242,0.4)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-            fontWeight: 600,
-            fontSize: '0.65rem',
-          }}
-        >
-          Main
-        </Typography>
-        <List disablePadding sx={{ mb: 3 }}>
+        <List disablePadding sx={{ mb: 1 }}>
           {mainNav.map((item) => {
             const active = isActive(item.href)
             return (
@@ -129,7 +128,7 @@ export function AppSidebar() {
                 sx={{
                   px: 1.5,
                   py: 1,
-                  color: active ? '#5B5BD6' : 'rgba(242,242,242,0.7)',
+                  color: active ? '#1A56DB' : 'rgba(242,242,242,0.7)',
                   mb: 0.5,
                 }}
               >
@@ -145,22 +144,7 @@ export function AppSidebar() {
           })}
         </List>
 
-        {/* Account section */}
-        <Typography
-          variant="caption"
-          sx={{
-            px: 1.5,
-            mb: 1,
-            display: 'block',
-            color: 'rgba(242,242,242,0.4)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.08em',
-            fontWeight: 600,
-            fontSize: '0.65rem',
-          }}
-        >
-          Account
-        </Typography>
+        <Divider sx={{ borderColor: 'rgba(255,255,255,0.08)', my: 1.5, mx: 1 }} />
         <List disablePadding>
           {accountNav.map((item) => {
             const active = isActive(item.href)
@@ -173,7 +157,7 @@ export function AppSidebar() {
                 sx={{
                   px: 1.5,
                   py: 1,
-                  color: active ? '#5B5BD6' : 'rgba(242,242,242,0.7)',
+                  color: active ? '#1A56DB' : 'rgba(242,242,242,0.7)',
                   mb: 0.5,
                 }}
               >
@@ -191,152 +175,90 @@ export function AppSidebar() {
       </Box>
 
       {/* User footer */}
-      <Box sx={{ borderTop: '1px solid #2a2a2a', p: 1.5 }}>
-        <Button
-          onClick={(e) => setUserMenuAnchor(e.currentTarget)}
-          fullWidth
+      <Box sx={{ borderTop: '1px solid #2a2a2a', p: 1.5, display: 'flex', flexDirection: 'column', gap: 1 }}>
+
+        {/* User chip */}
+        <Box
           sx={{
-            justifyContent: 'flex-start',
+            display: 'flex',
+            alignItems: 'center',
             gap: 1.5,
-            color: '#F2F2F2',
             px: 1.5,
-            py: 1.5,
-            borderRadius: 2,
-            textTransform: 'none',
-            '&:hover': { bgcolor: 'rgba(255,255,255,0.06)' },
+            py: 1,
+            borderRadius: '999px',
+            bgcolor: 'rgba(255,255,255,0.06)',
+            border: '1px solid rgba(255,255,255,0.08)',
           }}
         >
-          <Avatar sx={{ width: 36, height: 36, bgcolor: '#5B5BD6', fontSize: '0.875rem', flexShrink: 0 }}>
+          <Avatar sx={{ width: 28, height: 28, bgcolor: '#1A56DB', fontSize: '0.75rem', flexShrink: 0 }}>
             {initials}
           </Avatar>
-          <Box sx={{ textAlign: 'left', overflow: 'hidden' }}>
-            <Typography
-              sx={{
-                fontSize: '0.875rem',
-                fontWeight: 500,
-                color: '#F2F2F2',
-                lineHeight: 1.3,
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-            >
+          <Box sx={{ overflow: 'hidden', flex: 1, minWidth: 0 }}>
+            <Typography sx={{ fontSize: '0.8rem', fontWeight: 500, color: '#F2F2F2', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: 1.3 }}>
               {user?.name || 'User'}
             </Typography>
-            <Typography
-              sx={{
-                fontSize: '0.75rem',
-                color: 'rgba(242,242,242,0.5)',
-                whiteSpace: 'nowrap',
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-              }}
-            >
+            <Typography sx={{ fontSize: '0.68rem', color: 'rgba(242,242,242,0.4)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {user?.email}
             </Typography>
           </Box>
-        </Button>
-
-        <Menu
-          anchorEl={userMenuAnchor}
-          open={Boolean(userMenuAnchor)}
-          onClose={() => setUserMenuAnchor(null)}
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          PaperProps={{ sx: { width: 200, mt: -1 } }}
-        >
-          <MenuItem
-            component={Link}
-            to="/profile"
-            onClick={() => setUserMenuAnchor(null)}
-          >
-            <PersonIcon sx={{ fontSize: 16, mr: 1.5, color: 'text.secondary' }} />
-            Profile
-          </MenuItem>
-          <MenuItem
-            component={Link}
-            to="/settings"
-            onClick={() => setUserMenuAnchor(null)}
-          >
-            <SettingsIcon sx={{ fontSize: 16, mr: 1.5, color: 'text.secondary' }} />
-            Settings
-          </MenuItem>
-          <Divider sx={{ my: 0.5 }} />
-          <MenuItem
-            onClick={() => { setUserMenuAnchor(null); logout() }}
-            sx={{ color: 'error.main' }}
-          >
-            <LogoutIcon sx={{ fontSize: 16, mr: 1.5 }} />
-            Log out
-          </MenuItem>
-        </Menu>
-      </Box>
-    </Drawer>
-  )
-}
-
-export function TopBar() {
-  const [notifAnchor, setNotifAnchor] = useState<null | HTMLElement>(null)
-
-  const notifications = [
-    {
-      title: 'Report Generated',
-      body: 'Your Manufacturing Analysis report is ready',
-      time: '2 hours ago',
-    },
-    {
-      title: 'New Feature Available',
-      body: 'Try our new comparison tools',
-      time: '1 day ago',
-    },
-    {
-      title: 'Welcome to RAR',
-      body: 'Complete your profile to get started',
-      time: '3 days ago',
-    },
-  ]
-
-  return (
-    <AppBar
-      position="static"
-      elevation={0}
-      sx={{
-        bgcolor: 'background.paper',
-        borderBottom: '1px solid',
-        borderColor: 'divider',
-        color: 'text.primary',
-      }}
-    >
-      <Toolbar sx={{ px: 3, minHeight: 64 }}>
-        <Box sx={{ flex: 1 }}>
-          <Typography variant="h6" sx={{ fontWeight: 600, fontSize: '1rem', lineHeight: 1.3 }}>
-            Welcome back
-          </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.8rem' }}>
-            Generate powerful research reports with AI
-          </Typography>
         </Box>
-        <IconButton
-          onClick={(e) => setNotifAnchor(e.currentTarget)}
-          sx={{ color: 'text.secondary' }}
-        >
-          <Badge badgeContent={3} color="primary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
 
+        {/* Action buttons row */}
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <Button
+            onClick={() => logout()}
+            fullWidth
+            startIcon={<LogoutIcon sx={{ fontSize: '16px !important' }} />}
+            sx={{
+              color: 'rgba(242,242,242,0.6)',
+              bgcolor: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 2,
+              py: 0.75,
+              fontSize: '0.75rem',
+              fontWeight: 500,
+              textTransform: 'none',
+              '&:hover': { bgcolor: 'rgba(220,38,38,0.15)', color: '#f87171', borderColor: 'rgba(220,38,38,0.3)' },
+            }}
+          >
+            Logout
+          </Button>
+          <Button
+            onClick={(e) => setNotifAnchor(e.currentTarget)}
+            fullWidth
+            startIcon={
+              <Badge badgeContent={3} color="primary" sx={{ '& .MuiBadge-badge': { fontSize: '0.55rem', minWidth: 14, height: 14, top: -2, right: -2 } }}>
+                <NotificationsIcon sx={{ fontSize: '16px !important' }} />
+              </Badge>
+            }
+            sx={{
+              color: 'rgba(242,242,242,0.6)',
+              bgcolor: 'rgba(255,255,255,0.04)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              borderRadius: 2,
+              py: 0.75,
+              fontSize: '0.75rem',
+              fontWeight: 500,
+              textTransform: 'none',
+              '&:hover': { bgcolor: 'rgba(255,255,255,0.08)', color: '#F2F2F2', borderColor: 'rgba(255,255,255,0.15)' },
+            }}
+          >
+            Alerts
+          </Button>
+        </Box>
+        {/* Notifications menu */}
         <Menu
           anchorEl={notifAnchor}
           open={Boolean(notifAnchor)}
           onClose={() => setNotifAnchor(null)}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-          PaperProps={{ sx: { width: 320, mt: 1 } }}
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          PaperProps={{ sx: { width: 300, mt: -1 } }}
         >
           <Box sx={{ px: 2, py: 1.5, borderBottom: '1px solid', borderColor: 'divider' }}>
-            <Typography fontWeight={600}>Notifications</Typography>
-            <Typography variant="body2" color="text.secondary">
-              You have 3 unread notifications
+            <Typography fontWeight={600} fontSize="0.9rem">Notifications</Typography>
+            <Typography variant="body2" color="text.secondary" fontSize="0.8rem">
+              3 unread
             </Typography>
           </Box>
           {notifications.map((n, i) => (
@@ -351,7 +273,7 @@ export function TopBar() {
             </MenuItem>
           ))}
         </Menu>
-      </Toolbar>
-    </AppBar>
+      </Box>
+    </Drawer>
   )
 }

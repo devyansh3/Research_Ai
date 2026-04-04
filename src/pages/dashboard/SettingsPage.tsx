@@ -44,11 +44,21 @@ export default function SettingsPage() {
 
   return (
     <Box sx={{ p: 3, maxWidth: 800, mx: 'auto' }}>
-      <Box sx={{ mb: 4 }}>
-        <Typography variant="h5" fontWeight={700} gutterBottom>Settings</Typography>
-        <Typography variant="body2" color="text.secondary">
-          Manage your account preferences and configuration
-        </Typography>
+      <Box sx={{ mb: 4, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 2 }}>
+        <Box>
+          <Typography variant="h5" fontWeight={700} gutterBottom>Settings</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Manage your account preferences and configuration
+          </Typography>
+        </Box>
+        <Button
+          variant="contained"
+          startIcon={<SaveIcon />}
+          onClick={handleSave}
+          sx={{ fontWeight: 600, px: 3, flexShrink: 0 }}
+        >
+          Save Changes
+        </Button>
       </Box>
 
       {saved && (
@@ -224,14 +234,6 @@ export default function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Button
-          variant="contained"
-          startIcon={<SaveIcon />}
-          onClick={handleSave}
-          sx={{ alignSelf: 'flex-start', fontWeight: 600, px: 3 }}
-        >
-          Save All Settings
-        </Button>
       </Box>
     </Box>
   )
