@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 
 # Monorepo runtime artifacts
+backend/.env
 backend/.venv/
 backend/__pycache__/
 backend/data/auth.db

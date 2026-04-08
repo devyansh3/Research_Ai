@@ -103,7 +103,7 @@ export default function LoginPage() {
         }}
       >
         <Typography sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: '1.375rem', color: '#111111' }}>
-          RAR
+          Raar
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
           <Button component={Link} to="/login" sx={{ ...gradientBtnSx, py: 1, px: 3, fontSize: '0.875rem' }}>
@@ -162,7 +162,7 @@ export default function LoginPage() {
                 Welcome back.
               </Typography>
               <Typography sx={{ color: 'rgba(30,30,60,0.65)', fontSize: '0.95rem', lineHeight: 1.6 }}>
-                Sign in to your RAR account to continue your research.
+                Sign in to your Raar account to continue your research.
               </Typography>
             </Box>
 
@@ -317,7 +317,7 @@ export default function LoginPage() {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Typography sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, color: '#111111', fontSize: '1rem' }}>
-            RAR
+            Raar
           </Typography>
           <Typography sx={{ color: 'rgba(20,20,40,0.45)', fontSize: '0.875rem' }}>
             © 2024 Research & Analysis Report Generator.

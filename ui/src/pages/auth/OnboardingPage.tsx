@@ -32,6 +32,7 @@ const steps = [
 
 const cities = ['New York','Los Angeles','Chicago','Houston','Phoenix','San Francisco','Seattle','Boston','Miami','Denver','Other']
 const industries = ['Technology','Manufacturing','Healthcare','Finance','Retail','Education','Energy','Consulting','Real Estate','Other']
+const companyTypes = ['Startup','SMB','Mid size enterprises','Enterprises']
 const companySizes = ['1-10 employees','11-50 employees','51-200 employees','201-500 employees','500+ employees']
 const referralSources = ['Google Search','LinkedIn','Twitter/X','Friend or Colleague','Industry Conference','Blog Post','Newsletter','Other']
 
@@ -40,7 +41,7 @@ export default function OnboardingPage() {
   const [formData, setFormData] = useState({
     firstName: '', lastName: '', jobTitle: '',
     city: '', country: '',
-    industry: '', companyName: '', companySize: '',
+    industry: '', companyName: '', companyType: '', companySize: '',
     referralSource: '', referralDetail: '',
   })
   const { completeOnboarding } = useAuth()
@@ -52,7 +53,7 @@ export default function OnboardingPage() {
     switch (currentStep) {
       case 1: return !!(formData.firstName && formData.lastName)
       case 2: return !!formData.city
-      case 3: return !!(formData.industry && formData.companyName)
+      case 3: return !!(formData.industry && formData.companyName && formData.companyType)
       case 4: return !!formData.referralSource
       default: return false
     }
@@ -86,7 +87,7 @@ export default function OnboardingPage() {
           <Box sx={{ bgcolor: '#5B5BD6', borderRadius: 2, p: 0.75, display: 'flex' }}>
             <AutoAwesomeIcon sx={{ color: '#fff', fontSize: 20 }} />
           </Box>
-          <Typography sx={{ fontWeight: 700, color: '#F2F2F2', fontSize: '1.1rem' }}>RAR</Typography>
+          <Typography sx={{ fontWeight: 700, color: '#F2F2F2', fontSize: '1.1rem' }}>Raar</Typography>
         </Box>
 
         {/* Step list */}
@@ -277,6 +278,17 @@ export default function OnboardingPage() {
                       onChange={(e) => update('companyName', e.target.value)}
                       sx={{ '& .MuiOutlinedInput-root': { height: 44 } }}
                     />
+                    <FormControl fullWidth size="small">
+                      <InputLabel>Company Type</InputLabel>
+                      <Select
+                        value={formData.companyType}
+                        label="Company Type"
+                        onChange={(e) => update('companyType', e.target.value)}
+                        sx={{ height: 44 }}
+                      >
+                        {companyTypes.map((t) => <MenuItem key={t} value={t}>{t}</MenuItem>)}
+                      </Select>
+                    </FormControl>
                     <FormControl fullWidth size="small">
                       <InputLabel>Company Size (Optional)</InputLabel>
                       <Select
