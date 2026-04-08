@@ -6,6 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 
+export * from './authCredentialsRequest';
+export * from './authUserResponse';
 export * from './baseConfigurationResponse';
 export * from './baseConfigurationResponseDefaultWeights';
 export * from './comparisonReportRequest';
@@ -13,6 +15,7 @@ export * from './comparisonReportRequestWeights';
 export * from './getStagesApiV1StagesGetParams';
 export * from './getToolsApiV1ToolsGetParams';
 export * from './hTTPValidationError';
+export * from './logoutResponse';
 export * from './mainReportRequest';
 export * from './mainReportRequestWeights';
 export * from './reportResponse';

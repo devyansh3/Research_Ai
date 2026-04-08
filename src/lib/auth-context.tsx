@@ -1,94 +1,105 @@
-import { createContext, useContext, useState, useEffect } from 'react'
-import type { ReactNode } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { createContext, useContext, useEffect, useState } from "react";
+import type { ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  loginRequest,
+  logoutRequest,
+  meRequest,
+  signupRequest,
+  type AuthUser,
+} from "./api/auth-api";
 
 interface User {
-  id: string
-  email: string
-  name?: string
-  city?: string
-  business?: string
-  referralSource?: string
-  onboardingComplete: boolean
+  id: string;
+  email: string;
+  role: string;
+  name?: string;
+  city?: string;
+  business?: string;
+  referralSource?: string;
+  onboardingComplete?: boolean;
 }
 
 interface AuthContextType {
-  user: User | null
-  isLoading: boolean
-  login: (email: string, password: string) => Promise<void>
-  signup: (email: string, password: string) => Promise<void>
-  logout: () => void
-  updateUser: (data: Partial<User>) => void
-  completeOnboarding: () => void
+  user: User | null;
+  isLoading: boolean;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string) => Promise<void>;
+  logout: () => void;
+  updateUser: (data: Partial<User>) => void;
+  completeOnboarding: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined)
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+function toUser(authUser: AuthUser): User {
+  return {
+    id: String(authUser.id),
+    email: authUser.email,
+    role: authUser.role,
+    onboardingComplete: true,
+  };
+}
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
-  const navigate = useNavigate()
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const savedUser = localStorage.getItem('user')
-    if (savedUser) {
-      setUser(JSON.parse(savedUser))
-    }
-    setIsLoading(false)
-  }, [])
-
-  const login = async (email: string, _password: string) => {
-    const existingUser = localStorage.getItem(`user_${email}`)
-    if (existingUser) {
-      const userData = JSON.parse(existingUser)
-      setUser(userData)
-      localStorage.setItem('user', JSON.stringify(userData))
-      if (userData.onboardingComplete) {
-        navigate('/dashboard')
-      } else {
-        navigate('/onboarding')
+    let cancelled = false;
+    async function bootstrap(): Promise<void> {
+      try {
+        const me = await meRequest();
+        if (!cancelled) setUser(toUser(me));
+      } catch {
+        if (!cancelled) setUser(null);
+      } finally {
+        if (!cancelled) setIsLoading(false);
       }
-    } else {
-      throw new Error('User not found. Please sign up first.')
     }
-  }
+    void bootstrap();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-  const signup = async (email: string, _password: string) => {
-    const newUser: User = {
-      id: Math.random().toString(36).substring(7),
-      email,
-      onboardingComplete: false,
-    }
-    setUser(newUser)
-    localStorage.setItem('user', JSON.stringify(newUser))
-    localStorage.setItem(`user_${email}`, JSON.stringify(newUser))
-    navigate('/onboarding')
-  }
+  const login = async (email: string, password: string) => {
+    const loggedIn = await loginRequest({ email, password });
+    setUser(toUser(loggedIn));
+    navigate("/dashboard");
+  };
+
+  const signup = async (email: string, password: string) => {
+    const created = await signupRequest({ email, password });
+    setUser({ ...toUser(created), onboardingComplete: false });
+    navigate("/onboarding");
+  };
 
   const logout = () => {
-    setUser(null)
-    localStorage.removeItem('user')
-    navigate('/login')
-  }
+    void (async () => {
+      try {
+        await logoutRequest();
+      } finally {
+        setUser(null);
+        navigate("/login");
+      }
+    })();
+  };
 
   const updateUser = (data: Partial<User>) => {
     if (user) {
-      const updatedUser = { ...user, ...data }
-      setUser(updatedUser)
-      localStorage.setItem('user', JSON.stringify(updatedUser))
-      localStorage.setItem(`user_${user.email}`, JSON.stringify(updatedUser))
+      // Onboarding/profile persistence is intentionally disabled in this phase.
+      setUser({ ...user, ...data });
     }
-  }
+  };
 
   const completeOnboarding = () => {
     if (user) {
-      const updatedUser = { ...user, onboardingComplete: true }
-      setUser(updatedUser)
-      localStorage.setItem('user', JSON.stringify(updatedUser))
-      localStorage.setItem(`user_${user.email}`, JSON.stringify(updatedUser))
-      navigate('/dashboard')
+      setUser({ ...user, onboardingComplete: true });
+      navigate("/dashboard");
     }
-  }
+  };
 
   return (
     <AuthContext.Provider
@@ -96,13 +107,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     >
       {children}
     </AuthContext.Provider>
-  )
+  );
 }
 
 export function useAuth() {
-  const context = useContext(AuthContext)
+  const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider')
+    throw new Error("useAuth must be used within an AuthProvider");
   }
-  return context
+  return context;
 }

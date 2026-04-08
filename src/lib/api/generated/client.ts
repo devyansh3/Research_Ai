@@ -6,10 +6,13 @@
  * OpenAPI spec version: 1.0.0
  */
 import type {
+  AuthCredentialsRequest,
+  AuthUserResponse,
   BaseConfigurationResponse,
   ComparisonReportRequest,
   GetStagesApiV1StagesGetParams,
   GetToolsApiV1ToolsGetParams,
+  LogoutResponse,
   MainReportRequest,
   ReportResponse,
   StagesResponse,
@@ -23,6 +26,58 @@ type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 
   export const getProjectRARAPI = () => {
+/**
+ * @summary Signup
+ */
+const signupApiV1AuthSignupPost = (
+    authCredentialsRequest: AuthCredentialsRequest,
+ options?: SecondParameter<typeof customInstance<AuthUserResponse>>,) => {
+      return customInstance<AuthUserResponse>(
+      {url: `/api/v1/auth/signup`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: authCredentialsRequest
+    },
+      options);
+    }
+  
+/**
+ * @summary Login
+ */
+const loginApiV1AuthLoginPost = (
+    authCredentialsRequest: AuthCredentialsRequest,
+ options?: SecondParameter<typeof customInstance<AuthUserResponse>>,) => {
+      return customInstance<AuthUserResponse>(
+      {url: `/api/v1/auth/login`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: authCredentialsRequest
+    },
+      options);
+    }
+  
+/**
+ * @summary Logout
+ */
+const logoutApiV1AuthLogoutPost = (
+    
+ options?: SecondParameter<typeof customInstance<LogoutResponse>>,) => {
+      return customInstance<LogoutResponse>(
+      {url: `/api/v1/auth/logout`, method: 'POST'
+    },
+      options);
+    }
+  
+/**
+ * @summary Me
+ */
+const meApiV1AuthMeGet = (
+    
+ options?: SecondParameter<typeof customInstance<AuthUserResponse>>,) => {
+      return customInstance<AuthUserResponse>(
+      {url: `/api/v1/auth/me`, method: 'GET'
+    },
+      options);
+    }
+  
 /**
  * Returns only the static, hardcoded configuration data for dropdowns.
  * @summary Get Base Configuration
@@ -109,7 +164,11 @@ const createComparisonReportApiV1CompareToolsPost = (
       options);
     }
   
-return {getBaseConfigurationApiV1BaseConfigGet,optimizeWeightsApiV1OptimizeWeightsPost,getStagesApiV1StagesGet,getToolsApiV1ToolsGet,createMainReportApiV1GenerateReportPost,createComparisonReportApiV1CompareToolsPost}};
+return {signupApiV1AuthSignupPost,loginApiV1AuthLoginPost,logoutApiV1AuthLogoutPost,meApiV1AuthMeGet,getBaseConfigurationApiV1BaseConfigGet,optimizeWeightsApiV1OptimizeWeightsPost,getStagesApiV1StagesGet,getToolsApiV1ToolsGet,createMainReportApiV1GenerateReportPost,createComparisonReportApiV1CompareToolsPost}};
+export type SignupApiV1AuthSignupPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getProjectRARAPI>['signupApiV1AuthSignupPost']>>>
+export type LoginApiV1AuthLoginPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getProjectRARAPI>['loginApiV1AuthLoginPost']>>>
+export type LogoutApiV1AuthLogoutPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getProjectRARAPI>['logoutApiV1AuthLogoutPost']>>>
+export type MeApiV1AuthMeGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getProjectRARAPI>['meApiV1AuthMeGet']>>>
 export type GetBaseConfigurationApiV1BaseConfigGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getProjectRARAPI>['getBaseConfigurationApiV1BaseConfigGet']>>>
 export type OptimizeWeightsApiV1OptimizeWeightsPostResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getProjectRARAPI>['optimizeWeightsApiV1OptimizeWeightsPost']>>>
 export type GetStagesApiV1StagesGetResult = NonNullable<Awaited<ReturnType<ReturnType<typeof getProjectRARAPI>['getStagesApiV1StagesGet']>>>

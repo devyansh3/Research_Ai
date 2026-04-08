@@ -1,8 +1,9 @@
 import axios, { type AxiosRequestConfig } from "axios";
 
-const apiClient = axios.create({
+export const apiClient = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000",
   timeout: 120000,
+  withCredentials: true,
   headers: {
     "Content-Type": "application/json",
   },

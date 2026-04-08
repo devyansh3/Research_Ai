@@ -6,11 +6,169 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/v1/auth/signup": {
+      "post": {
+        "summary": "Signup",
+        "operationId": "signup_api_v1_auth_signup_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthCredentialsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "summary": "Login",
+        "operationId": "login_api_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthCredentialsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "summary": "Logout",
+        "operationId": "logout_api_v1_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LogoutResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/me": {
+      "get": {
+        "summary": "Me",
+        "operationId": "me_api_v1_auth_me_get",
+        "parameters": [
+          {
+            "name": "rar_access_token",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Rar Access Token"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthUserResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/base-config": {
       "get": {
         "summary": "Get Base Configuration",
         "description": "Returns only the static, hardcoded configuration data for dropdowns.",
         "operationId": "get_base_configuration_api_v1_base_config_get",
+        "parameters": [
+          {
+            "name": "rar_access_token",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Rar Access Token"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful Response",
@@ -18,6 +176,16 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BaseConfigurationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
                 }
               }
             }
@@ -30,15 +198,33 @@
         "summary": "Optimize Weights",
         "description": "Receives user context and triggers the DSPy agent to calculate weights dynamically.",
         "operationId": "optimize_weights_api_v1_optimize_weights_post",
+        "parameters": [
+          {
+            "name": "rar_access_token",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Rar Access Token"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/WeightOptimizationRequest"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -80,6 +266,22 @@
               "title": "Sector"
             },
             "description": "The selected sector"
+          },
+          {
+            "name": "rar_access_token",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Rar Access Token"
+            }
           }
         ],
         "responses": {
@@ -133,6 +335,22 @@
               "title": "Stage"
             },
             "description": "The selected stage/sheet"
+          },
+          {
+            "name": "rar_access_token",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Rar Access Token"
+            }
           }
         ],
         "responses": {
@@ -164,15 +382,33 @@
         "summary": "Create Main Report",
         "description": "Reads data from Excel based on the requested tool name and triggers the main report generation.",
         "operationId": "create_main_report_api_v1_generate_report_post",
+        "parameters": [
+          {
+            "name": "rar_access_token",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Rar Access Token"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/MainReportRequest"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -203,15 +439,33 @@
         "summary": "Create Comparison Report",
         "description": "Reads data from Excel for two specific tools and triggers the 1-on-1 comparison generation.",
         "operationId": "create_comparison_report_api_v1_compare_tools_post",
+        "parameters": [
+          {
+            "name": "rar_access_token",
+            "in": "cookie",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Rar Access Token"
+            }
+          }
+        ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/ComparisonReportRequest"
               }
             }
-          },
-          "required": true
+          }
         },
         "responses": {
           "200": {
@@ -240,6 +494,47 @@
   },
   "components": {
     "schemas": {
+      "AuthCredentialsRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "password": {
+            "type": "string",
+            "title": "Password"
+          }
+        },
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "AuthCredentialsRequest"
+      },
+      "AuthUserResponse": {
+        "properties": {
+          "id": {
+            "type": "integer",
+            "title": "Id"
+          },
+          "email": {
+            "type": "string",
+            "title": "Email"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "email",
+          "role"
+        ],
+        "title": "AuthUserResponse"
+      },
       "BaseConfigurationResponse": {
         "properties": {
           "sectors": {
@@ -337,6 +632,19 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "LogoutResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "title": "LogoutResponse"
       },
       "MainReportRequest": {
         "properties": {

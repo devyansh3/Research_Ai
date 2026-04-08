@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from '../../lib/auth-context'
 import {
+  Alert,
   Box,
   Card,
   CardContent,
@@ -42,7 +43,7 @@ export default function OnboardingPage() {
     industry: '', companyName: '', companySize: '',
     referralSource: '', referralDetail: '',
   })
-  const { updateUser, completeOnboarding } = useAuth()
+  const { completeOnboarding } = useAuth()
 
   const update = (field: string, value: string) =>
     setFormData((prev) => ({ ...prev, [field]: value }))
@@ -61,12 +62,6 @@ export default function OnboardingPage() {
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1)
     } else {
-      updateUser({
-        name: `${formData.firstName} ${formData.lastName}`,
-        city: formData.city,
-        business: formData.companyName,
-        referralSource: formData.referralSource,
-      })
       completeOnboarding()
     }
   }
@@ -200,6 +195,9 @@ export default function OnboardingPage() {
 
           <Card elevation={0} sx={{ boxShadow: '0 8px 40px rgba(0,0,0,0.1)' }}>
             <CardContent sx={{ p: 4 }}>
+              <Alert severity="info" sx={{ mb: 3 }}>
+                Onboarding persistence is temporarily disabled in this phase. You can continue to dashboard after setup.
+              </Alert>
               <Typography variant="h5" fontWeight={700} gutterBottom>
                 {steps[currentStep - 1].title}
               </Typography>
