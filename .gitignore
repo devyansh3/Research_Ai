@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Monorepo runtime artifacts
+backend/.venv/
+backend/__pycache__/
+backend/data/auth.db
+ui/node_modules/
+ui/dist/

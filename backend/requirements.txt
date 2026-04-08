@@ -1,0 +1,26 @@
+# Core web + data
+#streamlit>=1.38.0
+fastapi>=0.115.0
+uvicorn>=0.30.0
+pandas>=2.2.0
+openpyxl>=3.1.0
+python-docx>=1.1.0
+sqlalchemy>=2.0.0
+passlib>=1.7.4
+python-jose[cryptography]>=3.3.0
+
+# Environment + secrets
+python-dotenv>=1.0.0
+
+# LangChain stack (use recent compatible versions)
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-openai>=0.2.0
+langchain-community>=0.3.0
+langgraph>=0.2.0
+
+# OpenAI client
+openai>=1.40.0
+
+# DSPy (prompt engineering framework)
+dspy-ai>=2.4.0

@@ -1,13 +1,15 @@
 SHELL := /bin/zsh
-BACKEND_OPENAPI := /Users/devyanshsehgal/Downloads/RAR_F1 _07_04_26/openapi/openapi.json
-UI_OPENAPI := openapi/openapi.json
 
-.PHONY: api-refresh
+.PHONY: backend-openapi ui-api-refresh dev-ui dev-backend
 
-api-refresh:
-	test -f "$(BACKEND_OPENAPI)" || (echo "Backend OpenAPI file not found: $(BACKEND_OPENAPI)" && exit 1)
-	rm -rf src/lib/api/generated
-	mkdir -p openapi
-	cp "$(BACKEND_OPENAPI)" "$(UI_OPENAPI)"
-	@echo "Synced $(UI_OPENAPI)"
-	npx orval --config orval.config.ts
+backend-openapi:
+	cd backend && make openapi
+
+ui-api-refresh:
+	cd ui && npm run api:refresh
+
+dev-ui:
+	cd ui && npm run dev
+
+dev-backend:
+	cd backend && .venv/bin/uvicorn api:app --reload --host 0.0.0.0 --port 8000
