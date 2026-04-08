@@ -1,0 +1,563 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Project RAR API",
+    "description": "Backend API for the Research & Analysis multi-agent system",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/base-config": {
+      "get": {
+        "summary": "Get Base Configuration",
+        "description": "Returns only the static, hardcoded configuration data for dropdowns.",
+        "operationId": "get_base_configuration_api_v1_base_config_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BaseConfigurationResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/optimize-weights": {
+      "post": {
+        "summary": "Optimize Weights",
+        "description": "Receives user context and triggers the DSPy agent to calculate weights dynamically.",
+        "operationId": "optimize_weights_api_v1_optimize_weights_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WeightOptimizationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeightOptimizationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/stages": {
+      "get": {
+        "summary": "Get Stages",
+        "description": "Returns the available lifecycle stages (Excel sheets) for a sector.",
+        "operationId": "get_stages_api_v1_stages_get",
+        "parameters": [
+          {
+            "name": "sector",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The selected sector",
+              "title": "Sector"
+            },
+            "description": "The selected sector"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StagesResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/tools": {
+      "get": {
+        "summary": "Get Tools",
+        "description": "Returns the list of available tools in that specific sheet.",
+        "operationId": "get_tools_api_v1_tools_get",
+        "parameters": [
+          {
+            "name": "sector",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The selected sector",
+              "title": "Sector"
+            },
+            "description": "The selected sector"
+          },
+          {
+            "name": "stage",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "description": "The selected stage/sheet",
+              "title": "Stage"
+            },
+            "description": "The selected stage/sheet"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ToolsResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/generate-report": {
+      "post": {
+        "summary": "Create Main Report",
+        "description": "Reads data from Excel based on the requested tool name and triggers the main report generation.",
+        "operationId": "create_main_report_api_v1_generate_report_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MainReportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/compare-tools": {
+      "post": {
+        "summary": "Create Comparison Report",
+        "description": "Reads data from Excel for two specific tools and triggers the 1-on-1 comparison generation.",
+        "operationId": "create_comparison_report_api_v1_compare_tools_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComparisonReportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BaseConfigurationResponse": {
+        "properties": {
+          "sectors": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Sectors"
+          },
+          "personas": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Personas"
+          },
+          "default_weights": {
+            "additionalProperties": {
+              "additionalProperties": {
+                "type": "number"
+              },
+              "type": "object"
+            },
+            "type": "object",
+            "title": "Default Weights"
+          },
+          "feature_categories": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Feature Categories"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sectors",
+          "personas",
+          "default_weights",
+          "feature_categories"
+        ],
+        "title": "BaseConfigurationResponse"
+      },
+      "ComparisonReportRequest": {
+        "properties": {
+          "sector": {
+            "type": "string",
+            "title": "Sector"
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "input_tool_name": {
+            "type": "string",
+            "title": "Input Tool Name"
+          },
+          "compare_tool_name": {
+            "type": "string",
+            "title": "Compare Tool Name"
+          },
+          "persona": {
+            "type": "string",
+            "title": "Persona"
+          },
+          "weights": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Weights"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sector",
+          "stage",
+          "input_tool_name",
+          "compare_tool_name",
+          "persona",
+          "weights"
+        ],
+        "title": "ComparisonReportRequest",
+        "description": "payload for 1-on-1 comparison. Only needs string names of the two tools."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "MainReportRequest": {
+        "properties": {
+          "sector": {
+            "type": "string",
+            "title": "Sector"
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "input_tool_name": {
+            "type": "string",
+            "title": "Input Tool Name"
+          },
+          "persona": {
+            "type": "string",
+            "title": "Persona"
+          },
+          "weights": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Weights"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sector",
+          "stage",
+          "input_tool_name",
+          "persona",
+          "weights"
+        ],
+        "title": "MainReportRequest",
+        "description": "payload for the main report. Only needs the string name of the input tool, not the whole dict."
+      },
+      "ReportResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "report_markdown": {
+            "type": "string",
+            "title": "Report Markdown"
+          },
+          "token_usage": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "type": "object",
+            "title": "Token Usage"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "report_markdown"
+        ],
+        "title": "ReportResponse"
+      },
+      "StagesResponse": {
+        "properties": {
+          "sector": {
+            "type": "string",
+            "title": "Sector"
+          },
+          "stages": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Stages"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sector",
+          "stages"
+        ],
+        "title": "StagesResponse"
+      },
+      "ToolsResponse": {
+        "properties": {
+          "sector": {
+            "type": "string",
+            "title": "Sector"
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "tools": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Tools"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sector",
+          "stage",
+          "tools"
+        ],
+        "title": "ToolsResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "WeightOptimizationRequest": {
+        "properties": {
+          "sector": {
+            "type": "string",
+            "title": "Sector"
+          },
+          "stage": {
+            "type": "string",
+            "title": "Stage"
+          },
+          "tool": {
+            "type": "string",
+            "title": "Tool"
+          },
+          "persona": {
+            "type": "string",
+            "title": "Persona"
+          },
+          "feature_categories": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Feature Categories"
+          },
+          "initial_weights": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Initial Weights"
+          }
+        },
+        "type": "object",
+        "required": [
+          "sector",
+          "stage",
+          "tool",
+          "persona",
+          "feature_categories",
+          "initial_weights"
+        ],
+        "title": "WeightOptimizationRequest",
+        "description": "Payload expected when asking DSPy to optimize weights"
+      },
+      "WeightOptimizationResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "optimized_weights": {
+            "additionalProperties": {
+              "type": "number"
+            },
+            "type": "object",
+            "title": "Optimized Weights"
+          },
+          "reasoning": {
+            "type": "string",
+            "title": "Reasoning"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "optimized_weights",
+          "reasoning"
+        ],
+        "title": "WeightOptimizationResponse"
+      }
+    }
+  }
+}
