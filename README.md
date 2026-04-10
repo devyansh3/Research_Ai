@@ -50,11 +50,12 @@ Create `backend/.env` with values as needed:
 OPENAI_API_KEY=...
 JWT_SECRET_KEY=change-me
 JWT_ALGORITHM=HS256
-JWT_EXPIRE_MINUTES=120
+JWT_ACCESS_TOKEN_EXPIRE_MINUTES=120
 AUTH_COOKIE_NAME=rar_access_token
 AUTH_COOKIE_SECURE=false
 AUTH_COOKIE_SAMESITE=lax
-CORS_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+CORS_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
+CORS_ALLOWED_ORIGIN_REGEX=
 ```
 
 ## UI Setup
@@ -155,3 +156,45 @@ curl -i http://localhost:8000/api/v1/base-config
 ```
 
 If unauthenticated, protected endpoints return `401` as expected.
+
+## Vercel Deployment (Monorepo, Step 1)
+
+Deploy as two separate Vercel projects from the same repo.
+
+### 1) UI Project
+
+- Project root directory: `ui`
+- Build command: `npm run build`
+- Output directory: `dist`
+- Config file: `ui/vercel.json` (SPA rewrites for React routes)
+
+UI env vars:
+
+```env
+VITE_API_BASE_URL=https://<your-backend-project>.vercel.app
+```
+
+### 2) Backend Project
+
+- Project root directory: `backend`
+- Entry file: `api.py`
+- Config file: `backend/vercel.json` (routes all requests to FastAPI app)
+
+Backend env vars:
+
+```env
+OPENAI_API_KEY=...
+JWT_SECRET_KEY=change-me
+JWT_ALGORITHM=HS256
+JWT_ACCESS_TOKEN_EXPIRE_MINUTES=60
+AUTH_COOKIE_NAME=rar_access_token
+AUTH_COOKIE_SECURE=true
+AUTH_COOKIE_SAMESITE=none
+CORS_ALLOWED_ORIGINS=https://<your-ui-project>.vercel.app
+# Optional for preview deployments:
+CORS_ALLOWED_ORIGIN_REGEX=https://.*\.vercel\.app
+```
+
+Notes:
+- On Vercel, if `DATABASE_URL` is not set, backend uses `/tmp/auth.db` (ephemeral).
+- You can set `DATABASE_URL` later to move auth persistence off SQLite.

@@ -34,30 +34,49 @@ app = FastAPI(
     version="1.0.0"
 )
 
-ALLOWED_ORIGINS = [
+DEFAULT_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "http://localhost:4173",
     "http://127.0.0.1:4173",
 ]
 
+
+def _parse_csv_env(name: str, fallback: List[str]) -> List[str]:
+    value = os.getenv(name, "")
+    if not value.strip():
+        return fallback
+    return [item.strip() for item in value.split(",") if item.strip()]
+
+
+ALLOWED_ORIGINS = _parse_csv_env("CORS_ALLOWED_ORIGINS", DEFAULT_ALLOWED_ORIGINS)
+ALLOWED_ORIGIN_REGEX = os.getenv("CORS_ALLOWED_ORIGIN_REGEX", "").strip() or None
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=ALLOWED_ORIGINS,
+    allow_origin_regex=ALLOWED_ORIGIN_REGEX,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-DB_PATH = Path("./data/auth.db").resolve()
-DATABASE_URL = f"sqlite:///{DB_PATH}"
+IS_VERCEL = os.getenv("VERCEL", "").lower() in {"1", "true"}
+DATABASE_URL = os.getenv("DATABASE_URL", "").strip()
+if not DATABASE_URL:
+    db_path = Path("/tmp/auth.db") if IS_VERCEL else Path("./data/auth.db").resolve()
+    if not IS_VERCEL:
+        db_path.parent.mkdir(parents=True, exist_ok=True)
+    DATABASE_URL = f"sqlite:///{db_path}"
 
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY", "dev-insecure-change-me")
 JWT_ALGORITHM = os.getenv("JWT_ALGORITHM", "HS256")
 JWT_ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", "60"))
 AUTH_COOKIE_NAME = os.getenv("AUTH_COOKIE_NAME", "rar_access_token")
 AUTH_COOKIE_SECURE = os.getenv("AUTH_COOKIE_SECURE", "false").lower() == "true"
-AUTH_COOKIE_SAMESITE = os.getenv("AUTH_COOKIE_SAMESITE", "lax")
+AUTH_COOKIE_SAMESITE = os.getenv("AUTH_COOKIE_SAMESITE", "lax").lower()
+if AUTH_COOKIE_SAMESITE not in {"lax", "strict", "none"}:
+    AUTH_COOKIE_SAMESITE = "lax"
 
 pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
