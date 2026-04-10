@@ -5,7 +5,7 @@ Endpoint: GET /api/v1/base-config
 
 Returns: Lists for sectors, personas, feature_categories, and the default_weights dictionary.
 
-2. Cascading Data Selection
+2. Cascading Data Selections
 Because our tool data comes from large internal sources, we fetch it dynamically to keep the app lightning fast.
 
 When user selects a Sector: Call GET /api/v1/stages?sector={SectorName} to get the list of lifecycle stages.
