@@ -52,7 +52,7 @@ const notifications = [
     time: '1 day ago',
   },
   {
-    title: 'Welcome to Raar',
+    title: 'Welcome to roaar',
     body: 'Complete your profile to get started',
     time: '3 days ago',
   },
@@ -110,7 +110,7 @@ export function AppSidebar() {
           <AutoAwesomeIcon sx={{ color: '#fff', fontSize: 20 }} />
         </Box>
         <Typography sx={{ fontWeight: 600, color: '#F2F2F2', fontSize: '1rem' }}>
-          Raar
+          roaar
         </Typography>
       </Box>
 

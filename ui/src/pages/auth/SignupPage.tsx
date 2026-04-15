@@ -117,7 +117,7 @@ export default function SignupPage() {
         }}
       >
         <Typography sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, fontSize: '1.375rem', color: '#111111' }}>
-          Raar
+          roaar
         </Typography>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 3 }}>
           <Link to="/login" style={{ color: 'rgba(20,20,40,0.6)', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500 }}>
@@ -360,10 +360,10 @@ export default function SignupPage() {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
           <Typography sx={{ fontFamily: 'Manrope, sans-serif', fontWeight: 700, color: '#111111', fontSize: '1rem' }}>
-            Raar
+            roaar
           </Typography>
           <Typography sx={{ color: 'rgba(20,20,40,0.45)', fontSize: '0.875rem' }}>
-            © 2024 Research & Analysis Report Generator.
+            © 2024 roaar.
           </Typography>
         </Box>
         <Box sx={{ display: 'flex', gap: 4 }}>
