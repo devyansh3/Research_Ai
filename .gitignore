@@ -30,3 +30,4 @@ backend/__pycache__/
 backend/data/auth.db
 ui/node_modules/
 ui/dist/
+ui/coverage/
